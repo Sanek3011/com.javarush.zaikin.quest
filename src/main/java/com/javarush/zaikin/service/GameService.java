@@ -19,18 +19,20 @@ public class GameService {
         Level currentLevel = game.getCurrentLevel();
         int newIndex = db.getLevelsDB().indexOf(currentLevel)+1;
         game.setCurrentLevel(db.getLevelsDB().get(newIndex));
-        game.setEnergy(game.getEnergy()-10);
     }
     public boolean checkLose() {
-        return game.getEnergy() <= 0 || game.getHealth() == 0;
+        return game.getHealth() == 0;
     }
     public boolean checkWin() {
-        return game.getCurrentLevel().getId() == 20;
+        return game.getCurrentLevel().getId() == db.getLevelsDB().size();
     }
-    public void drinkEnergetic() {
-        if (game.getIsAvailableEnergetic()) {
-            game.setAvailableEnergetic(false);
-            game.setEnergy(game.getEnergy()+100);
+    public int getQuestSize() {
+        return db.getLevelsDB().size();
+    }
+    public void drinkPotion() {
+        if (game.getIsAvailablePotion()) {
+            game.setAvailablePotion(false);
+            game.setHealth(game.getHealth()+1);
         }
     }
     public Level getLevel() {
@@ -67,17 +69,11 @@ public class GameService {
         }
         return correct;
     }
-    public boolean getIsAvailableEnergetic() {
-        return game.getIsAvailableEnergetic();
-    }
     public HttpSession getSession() {
         return game.getSession();
     }
     public String getName() {
         return game.getName();
-    }
-    public int getEnergy() {
-        return game.getEnergy();
     }
     public int getHealth() {
         return game.getHealth();
@@ -85,6 +81,8 @@ public class GameService {
     public void decreaseHealth() {
         game.setHealth(game.getHealth() - 1);
     }
-
+    public boolean getIsAvailablePotion() {
+        return game.getIsAvailablePotion();
+    }
 
 }

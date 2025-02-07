@@ -22,14 +22,19 @@ public class GameServlet extends HttpServlet {
         HttpSession session = req.getSession();
         GameService service = (GameService) session.getAttribute("player");
         String answer = req.getParameter("answer");
+
         if (!service.getCorrectAnswer().equals(URLDecoder.decode(answer))) {
             service.decreaseHealth();
         }
+
         if (service.checkLose() || service.checkWin()) {
+            session.setAttribute("size", service.getQuestSize());
             resp.sendRedirect("/views/loser.jsp");
             return;
         }
+
         service.levelUp();
+
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/firstLevel.jsp");
         requestDispatcher.forward(req, resp);
 
@@ -39,7 +44,9 @@ public class GameServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         GameService service = (GameService) session.getAttribute("player");
-        service.drinkEnergetic();
+
+        service.drinkPotion();
+
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/firstLevel.jsp");
         requestDispatcher.forward(req, resp);
 

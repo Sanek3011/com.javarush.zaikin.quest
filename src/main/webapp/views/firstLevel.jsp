@@ -11,71 +11,62 @@
  String[] answersByLvl = player.getAnswersByLvl();%>
 <html>
 <head>
-    <link rel="stylesheet" href="/views/my.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/views/my.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>Level <%=level.getId()%></title>
 </head>
 <body>
+<div class="container px-4 mt-5"> <%-- mt - отступ по вертикали px - горизонт отступ  fs - fontsize--%>
+<div class="container text-center mt-5"> <h1><%=level.getId()%> уровень!</h1> </div>
 
-<%--<p>Отладка: sessionScope.player = ${sessionScope.player}</p>--%>
-<%--<p>Отладка: sessionScope.player.currentLevel = ${sessionScope.player.currentLevel}</p>--%>
-<%--<p>Отладка: sessionScope.player.isAvailableEnergetic = ${sessionScope.player.isAvailableEnergetic}</p>--%>
+<div class="question-box mt-4">
+    <h2 class="mb-3">❓ ВОПРОС: ❓</h2>
+    <p class="fs-5"><%=questionByLvl%></p>
+    <form action="/gameServlet" method="GET">
+        <div class="text-start">
+            <input type="radio" id="option1" name="answer" value=<%=URLEncoder.encode(answersByLvl[0])%> required>
+            <label for="option1"><%=answersByLvl[0]%></label><br>
 
+            <input type="radio" id="option2" name="answer" value=<%=URLEncoder.encode(answersByLvl[1])%>>
+            <label for="option2"><%=answersByLvl[1]%></label><br>
 
-<h1>Поздравляем с переходом на <%=level.getId()%> уровень!</h1>
-<h2>
-    <p><%=player.getDescForLvl()%></p>
-</h2>
-
-
-
-<h2>ВОПРОС:</h2>
-<%=questionByLvl%>
-<form action="/gameServlet" method="GET">
-
-
-    <p>Выберите вариант:</p>
-    <input type="radio" id="option1" name="answer" value=<%=URLEncoder.encode(answersByLvl[0])%> required>
-    <label for="option1"><%=answersByLvl[0]%></label><br>
-
-    <input type="radio" id="option2" name="answer" value=<%=URLEncoder.encode(answersByLvl[1])%>>
-    <label for="option2"><%=answersByLvl[1]%></label><br>
-
-    <input type="radio" id="option3" name="answer" value=<%=URLEncoder.encode(answersByLvl[2])%>>
-    <label for="option3"><%=answersByLvl[2]%></label><br>
-
-    <button type="submit">Отправить</button>
-</form>
+            <input type="radio" id="option3" name="answer" value=<%=URLEncoder.encode(answersByLvl[2])%>>
+            <label for="option3"><%=answersByLvl[2]%></label><br>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+    </form>
+</div>
 
 <br>
-<c:if test="${sessionScope.player.isAvailableEnergetic == true}">
+<c:if test="${sessionScope.player.isAvailablePotion == true}">
     <form action="/gameServlet" method="POST">
-        <button type="submit">Выпить энергетик!</button>
+        <button type="submit">Воспользоваться эликсиром жизни!</button>
     </form>
 </c:if>
+    <div class="accordion mt-4 w-75" id="levelDesc">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#descContent">
+                    ℹ️ Подглядеть подсказку
+                </button>
+            </h2>
+            <div id="descContent" class="accordion-collapse collapse">
+                <div class="accordion-body bg-light">
+                    <p><%=player.getDescForLvl()%></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-
-
-
-
-
-
-<div class="sessionInfo"><h4>
-    Данные по текущей сессии:
-    <%= player.getSession().getId()%>
-    <br>
-    Имя персонажа:
-    <%= player.getName()%>
-    <br>
-    Ваши жизни:
-    <%=player.getHealth()%>
-    <br>
-    Ваша энергия:
-    <%= player.getEnergy()%>
-    <br>
-    Текущий уровень:
-    <%= player.getLevel().getId()%>
-</h4>
+    <div class="position-fixed bottom-0 end-0 m-3 p-3 border border-secondary rounded bg-light shadow-sm small">
+        <h6 class="text-center fw-bold"> Данные сессии</h6>
+        <p class="mb-1">ID: <%= player.getSession().getId()%></p>
+        <p class="mb-1">Имя: <%= player.getName()%></p>
+        <p class="mb-1">Жизни: <%= player.getHealth()%></p>
+        <p class="mb-0">Уровень: <%= player.getLevel().getId()%></p>
+    </div>
 </div>
 </body>
 </html>

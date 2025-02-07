@@ -7,13 +7,12 @@ import lombok.Data;
 public class Game {
     private String name;
     private HttpSession session;
-    private int energy;
     private Level currentLevel;
     private int health;
-    private boolean isAvailableEnergetic;
+    private boolean isAvailablePotion;
 
-    public boolean getIsAvailableEnergetic() { // продублировал так как мавен не видит этот геттер ломбока
-        return isAvailableEnergetic;
+    public boolean getIsAvailablePotion() { // продублировал так как мавен не видит этот геттер ломбока
+        return isAvailablePotion;
     }
 
 
@@ -21,10 +20,9 @@ public class Game {
     public Game(String name, HttpSession session, LevelsDB db) {
         this.name = name;
         this.session = session;
-        this.energy = 100;
         this.currentLevel = db.getLevelsDB().get(0);
         this.health = 2;
-        this.isAvailableEnergetic = true;
+        this.isAvailablePotion = true;
     }
 
 }

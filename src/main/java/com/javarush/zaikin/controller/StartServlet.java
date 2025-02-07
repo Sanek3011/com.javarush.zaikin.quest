@@ -1,15 +1,11 @@
 package com.javarush.zaikin.controller;
 
-import com.javarush.zaikin.model.Game;
-import com.javarush.zaikin.model.LevelsDB;
+
+import com.javarush.zaikin.model.*;
 import com.javarush.zaikin.service.GameService;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
