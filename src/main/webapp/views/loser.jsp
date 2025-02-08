@@ -12,18 +12,16 @@
 <body>
 <div class="container px-4 mt-5">
 <c:choose>
-    <c:when test="${sessionScope.player.level.id == sessionScope.size}">
-
-        <h1 class="container text-center mt-5 text-success">Поздравляем!</h1>
-        <h2> <br>Вы сумели ответить на достаточное количество вопросов правильно и прошли квест.</h2>
+    <c:when test="${sessionScope.health <= 0}">
+        <h1 class="container text-center mt-5 text-danger">Вы проиграли</h1>
+        <h2 class="border p-4 rounded shadow-sm bg-light mt-3"><p>Случилось это потому, что Вы допустили слишком много ошибок</p>
+            <p>Если желаете попробовать снова - нажмите на кнопку ниже</p></h2>
 
     </c:when>
     <c:otherwise>
-<h1 class="container text-center mt-5 text-danger">Вы проиграли</h1>
-<h2 class="border p-4 rounded shadow-sm bg-light mt-3"><p>Случилось это потому, что Вы допустили слишком много ошибок</p>
-<p>Если желаете попробовать снова - нажмите на кнопку ниже</p></h2>
+        <h1 class="container text-center mt-5 text-success">Поздравляем!</h1>
+        <h2> <br>Вы сумели ответить на достаточное количество вопросов правильно и прошли квест.</h2>
     </c:otherwise>
-
 </c:choose>
 <h3>Сыграем еще?</h3>
 <form action="/restart">

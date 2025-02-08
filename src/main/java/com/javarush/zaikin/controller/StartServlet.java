@@ -23,7 +23,9 @@ public class StartServlet extends HttpServlet {
         System.out.println("LOG:: стартовый сервлет запустился");
         HttpSession session = req.getSession();
         String name = req.getParameter("name");
-        GameService service = new GameService(new Game(name, session, db));
+        String tips = req.getParameter("tips");
+        System.out.println(tips);
+        GameService service = new GameService(new Game(name, db, Boolean.parseBoolean(tips)));
         session.setAttribute("player", service);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/firstLevel.jsp");
         requestDispatcher.forward(req, resp);

@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Level {
-    private int id;
     private String description;
     private String question;
     private String[] answers;

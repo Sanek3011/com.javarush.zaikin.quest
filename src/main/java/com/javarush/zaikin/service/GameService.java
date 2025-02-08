@@ -3,12 +3,11 @@ package com.javarush.zaikin.service;
 import com.javarush.zaikin.model.Game;
 import com.javarush.zaikin.model.Level;
 import com.javarush.zaikin.model.LevelsDB;
-import jakarta.servlet.http.HttpSession;
 
 
 public class GameService {
     private Game game;
-    LevelsDB db = LevelsDB.getInstance();
+    private final LevelsDB db = LevelsDB.getInstance();
 
 
     public GameService(Game game) {
@@ -16,15 +15,15 @@ public class GameService {
     }
 
     public void levelUp() {
-        Level currentLevel = game.getCurrentLevel();
+        Level currentLevel = getLevel();
         int newIndex = db.getLevelsDB().indexOf(currentLevel)+1;
         game.setCurrentLevel(db.getLevelsDB().get(newIndex));
     }
     public boolean checkLose() {
-        return game.getHealth() == 0;
+        return game.getHealth() <= 0;
     }
-    public boolean checkWin() {
-        return game.getCurrentLevel().getId() == db.getLevelsDB().size();
+    public boolean checkWin(Level level) {
+        return getLevelIndex(level) == getQuestSize();
     }
     public int getQuestSize() {
         return db.getLevelsDB().size();
@@ -38,6 +37,9 @@ public class GameService {
     public Level getLevel() {
         return game.getCurrentLevel();
 
+    }
+    public int getLevelIndex(Level level) {
+        return db.getLevelsDB().indexOf(level)+1;
     }
 
     public String getDescForLvl() {
@@ -69,9 +71,6 @@ public class GameService {
         }
         return correct;
     }
-    public HttpSession getSession() {
-        return game.getSession();
-    }
     public String getName() {
         return game.getName();
     }
@@ -84,5 +83,6 @@ public class GameService {
     public boolean getIsAvailablePotion() {
         return game.getIsAvailablePotion();
     }
+    public boolean getIsTipsOn() {return game.isTipsOn();}
 
 }

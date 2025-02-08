@@ -7,18 +7,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% GameService player = (GameService) session.getAttribute("player"); %>
 <%Level level = player.getLevel();
- String questionByLvl = player.getQuestionForLvl();
+int levelInOrder = player.getLevelIndex(level);
+String questionByLvl = player.getQuestionForLvl();
  String[] answersByLvl = player.getAnswersByLvl();%>
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/my.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <title>Level <%=level.getId()%></title>
+    <title>Level <%=levelInOrder%></title>
 </head>
 <body>
+
+
 <div class="container px-4 mt-5"> <%-- mt - отступ по вертикали px - горизонт отступ  fs - fontsize--%>
-<div class="container text-center mt-5"> <h1><%=level.getId()%> уровень!</h1> </div>
+<div class="container text-center mt-5"> <h1><%=levelInOrder%> уровень!</h1> </div>
 
 <div class="question-box mt-4">
     <h2 class="mb-3">❓ ВОПРОС: ❓</h2>
@@ -44,6 +47,7 @@
         <button type="submit">Воспользоваться эликсиром жизни!</button>
     </form>
 </c:if>
+    <c:if test="${sessionScope.player.isTipsOn == true}">
     <div class="accordion mt-4 w-75" id="levelDesc">
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -58,14 +62,15 @@
             </div>
         </div>
     </div>
+    </c:if>
 
 
     <div class="position-fixed bottom-0 end-0 m-3 p-3 border border-secondary rounded bg-light shadow-sm small">
         <h6 class="text-center fw-bold"> Данные сессии</h6>
-        <p class="mb-1">ID: <%= player.getSession().getId()%></p>
+        <p class="mb-1">ID: <%= session.getId()%></p>
         <p class="mb-1">Имя: <%= player.getName()%></p>
         <p class="mb-1">Жизни: <%= player.getHealth()%></p>
-        <p class="mb-0">Уровень: <%= player.getLevel().getId()%></p>
+        <p class="mb-0">Уровень: <%= player.getLevelIndex(level)%></p>
     </div>
 </div>
 </body>

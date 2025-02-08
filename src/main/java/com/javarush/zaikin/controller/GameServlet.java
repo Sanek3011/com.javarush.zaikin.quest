@@ -27,8 +27,8 @@ public class GameServlet extends HttpServlet {
             service.decreaseHealth();
         }
 
-        if (service.checkLose() || service.checkWin()) {
-            session.setAttribute("size", service.getQuestSize());
+        if (service.checkLose() || service.checkWin(service.getLevel())) {
+            session.setAttribute("health", service.getHealth());
             resp.sendRedirect("/views/loser.jsp");
             return;
         }

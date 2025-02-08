@@ -28,6 +28,9 @@
         <h4 class="fw-bold">Назови свое имя!</h4>
         <form action="levelFirst" method="GET">
             <input type="text" class="form-control d-inline w-auto" name="name" placeholder="Введите имя">
+            <div class="form-check d-flex align-items-center m-0">
+            <input type="checkbox" class="form-check-input" name="tips" value="true"> - Включить подсказки
+            </div>
             <button class="btn btn-dark">Начать</button>
         </form>
     </div>

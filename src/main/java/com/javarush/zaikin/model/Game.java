@@ -1,15 +1,14 @@
 package com.javarush.zaikin.model;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 
 @Data
 public class Game {
     private String name;
-    private HttpSession session;
     private Level currentLevel;
     private int health;
     private boolean isAvailablePotion;
+    private boolean isTipsOn;
 
     public boolean getIsAvailablePotion() { // продублировал так как мавен не видит этот геттер ломбока
         return isAvailablePotion;
@@ -17,12 +16,12 @@ public class Game {
 
 
 
-    public Game(String name, HttpSession session, LevelsDB db) {
+    public Game(String name, LevelsDB db, boolean isTipsOn) {
         this.name = name;
-        this.session = session;
         this.currentLevel = db.getLevelsDB().get(0);
         this.health = 2;
         this.isAvailablePotion = true;
+        this.isTipsOn = isTipsOn;
     }
 
 }
