@@ -35,7 +35,7 @@ public class GameServlet extends HttpServlet {
 
         service.levelUp();
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/firstLevel.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/Game.jsp");
         requestDispatcher.forward(req, resp);
 
     }
@@ -47,7 +47,7 @@ public class GameServlet extends HttpServlet {
 
         service.drinkPotion();
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/firstLevel.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/Game.jsp");
         requestDispatcher.forward(req, resp);
 
     }

@@ -27,7 +27,7 @@ public class StartServlet extends HttpServlet {
         System.out.println(tips);
         GameService service = new GameService(new Game(name, db, Boolean.parseBoolean(tips)));
         session.setAttribute("player", service);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/firstLevel.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/Game.jsp");
         requestDispatcher.forward(req, resp);
 
     }
